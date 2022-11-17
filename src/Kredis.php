@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Kredis;
 
+use Kredis\Command\KredisCommand as Command;
 use Kredis\Exception\KredisException;
 
 class Kredis {
@@ -164,19 +165,7 @@ class Kredis {
    * @param string|array|null $options
    */
   private function write(string $command, $options = null) {
-    if (is_array($options)) {
-      // TODO: опасная секция
-      // TODO: переделать
-      $options = implode(" ", $options);
-    }
-
-    if (!is_null($options)) {
-      $options = '"' . $options . '"';
-
-      $command = $command . " " . $options;
-    }
-
-    $command = $command . "\r\n";
+    $command = Command::commandBuilder($command, $options);
 
     fwrite($this->resource, $command);
   }
@@ -240,7 +229,7 @@ class Kredis {
 
       default:
       {
-        throw new KredisException("Unknown response type: '$type");
+        throw new KredisException("Unknown response type: $type");
       }
     }
   }

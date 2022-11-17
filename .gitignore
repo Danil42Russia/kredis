@@ -2,3 +2,4 @@
 /vendor
 .DS_Store
 kphp_out
+.phpunit.result.cache
