@@ -4,7 +4,8 @@
   "license": "MIT",
   "type": "library",
   "keywords": [
-    "redis", "kphp"
+    "redis",
+    "kphp"
   ],
   "require": {
     "php": "^7.4 || ^8.0"
@@ -40,6 +41,6 @@
     "sort-packages": true
   },
   "scripts": {
-    "test:unit": "vendor/bin/phpunit"
+    "test:unit": "vendor/bin/phpunit --configuration phpunit.xml"
   }
 }

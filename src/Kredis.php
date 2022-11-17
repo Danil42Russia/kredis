@@ -107,8 +107,7 @@ class Kredis {
   public function echo(string $message): string {
     $this->write("ECHO", $message);
 
-    $resp = $this->read();
-    return (string)$resp;
+    return (string)$this->read();
   }
 
   /**
@@ -144,12 +143,36 @@ class Kredis {
   }
 
   /**
+   * @link https://redis.io/commands/keys
+   *
    * @throws KredisException
    */
   public function keys(string $pattern): array {
-    $this->write("keys", $pattern);
+    $this->write("KEYS", $pattern);
 
     return (array)$this->read();
+  }
+
+  /**
+   * @param string        $key
+   * @param string|mixed  $value
+   * @return boolean
+   *
+   * @throws KredisException
+   * @see непроверенная функция
+   *
+   * https://redis.io/commands/set
+   *
+   */
+  public function set(string $key, $value): bool {
+    $this->write("SET", [$key, $value]);
+
+    $resp = $this->read();
+    if ($resp === "OK") {
+      return true;
+    }
+
+    return (bool)$resp;
   }
 
   function close(): bool {
