@@ -5,6 +5,10 @@ declare(strict_types = 1);
 namespace Kredis\Command;
 
 abstract class KredisCommand {
+  /**
+   * @param string $name
+   * @return string[]
+   */
   private static function createBlock(string $name): array {
     return [
       "$" . strlen($name) . "\r\n",
@@ -13,9 +17,9 @@ abstract class KredisCommand {
   }
 
   /**
-   * @param string                  $command
-   * @param string|array|null       $args
-   * @param array|null              $options
+   * @param string              $command
+   * @param string|mixed[]|null $args
+   * @param mixed[]|null        $options
    * @return string
    */
   public static function commandBuilder(string $command, $args = null, array $options = null): string {
@@ -38,7 +42,7 @@ abstract class KredisCommand {
 
     if (!is_null($options)) {
       foreach ($options as $key => $value) {
-        $key   = static::createBlock($key);
+        $key   = static::createBlock((string)$key);
         $value = static::createBlock((string)$value);
 
         $response = array_merge($response, $key, $value);
