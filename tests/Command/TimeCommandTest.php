@@ -6,7 +6,7 @@ use Tests\CommandTestCase;
 
 final class TimeCommandTest extends CommandTestCase {
   function testArgument(): void {
-    $redis  = $this->getphpInstance();
+    $redis  = $this->getPhpInstance();
     $kredis = $this->getKphpInstance();
 
     $this->assertType($redis->time(), $kredis->time());

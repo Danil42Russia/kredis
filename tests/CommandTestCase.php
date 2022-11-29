@@ -23,8 +23,8 @@ abstract class CommandTestCase extends TestCase {
   private function newKphpInstance(): Kredis {
     $kphpInstance = new Kredis();
 
-    $host = getenv('KPHP_REDIS_HOST');
-    $post = getenv('KPHP_REDIS_PORT');
+    $host = (string)getenv('KPHP_REDIS_HOST');
+    $post = (int)getenv('KPHP_REDIS_PORT');
     $kphpInstance->connect($host, $post);
 
     return $kphpInstance;
@@ -33,8 +33,8 @@ abstract class CommandTestCase extends TestCase {
   private function newPhpInstance(): Redis {
     $phpInstance = new Redis();
 
-    $host = getenv('PHP_REDIS_HOST');
-    $post = getenv('PHP_REDIS_PORT');
+    $host = (string)getenv('PHP_REDIS_HOST');
+    $post = (int)getenv('PHP_REDIS_PORT');
     $phpInstance->connect($host, $post);
 
     return $phpInstance;
@@ -50,6 +50,21 @@ abstract class CommandTestCase extends TestCase {
     self::assertNotNull($this->phpInstance);
 
     return $this->phpInstance;
+  }
+
+  /**
+   * @param (tuple(string, string))[] $data
+   */
+  protected function fillData($data) {
+    $redis  = $this->getPhpInstance();
+    $kredis = $this->getKphpInstance();
+
+    foreach ($data as $item) {
+      [$key, $value] = $item;
+
+      $redis->set($key, $value);
+      $kredis->set($key, $value);
+    }
   }
 
   /**

@@ -6,10 +6,11 @@ use Tests\CommandTestCase;
 
 final class GetCommandTest extends CommandTestCase {
   /**
+   * @param string $key
    * @dataProvider commandArguments
    */
   function testArguments($key): void {
-    $redis  = $this->getphpInstance();
+    $redis  = $this->getPhpInstance();
     $kredis = $this->getKphpInstance();
 
     // TODO: добавить добавление данных

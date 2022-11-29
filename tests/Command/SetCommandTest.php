@@ -6,10 +6,12 @@ use Tests\CommandTestCase;
 
 final class SetCommandTest extends CommandTestCase {
   /**
+   * @param string $key
+   * @param mixed  $value
    * @dataProvider commandArguments
    */
   function testArguments($key, $value): void {
-    $redis  = $this->getphpInstance();
+    $redis  = $this->getPhpInstance();
     $kredis = $this->getKphpInstance();
 
     $this->assertSame($redis->set($key, $value), $kredis->set($key, $value));
