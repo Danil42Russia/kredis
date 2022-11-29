@@ -25,14 +25,15 @@ abstract class KredisCommand {
 
     $request = [$command];
     if (!is_null($args)) {
-      array_push($request, ...$args);
+      $request = array_merge($request, $args);
     }
 
+    /** @var string[]$response */
     $response = [];
     foreach ($request as $item) {
       $block = static::createBlock((string)$item);
 
-      array_push($response, ...$block);
+      $response = array_merge($response, $block);
     }
 
     if (!is_null($options)) {
@@ -40,13 +41,13 @@ abstract class KredisCommand {
         $key   = static::createBlock($key);
         $value = static::createBlock((string)$value);
 
-        array_push($response, ...$key, ...$value);
+        $response = array_merge($response, $key, $value);
       }
     }
 
-    $start = ["*" . (count($response) / 2) . "\r\n"];
-    array_unshift($response, ...$start);
+    $start    = ["*" . (count($response) / 2) . "\r\n"];
+    $response = array_merge($start, $response);
 
-    return join("", $response);
+    return implode("", $response);
   }
 }
