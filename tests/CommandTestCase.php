@@ -9,41 +9,45 @@ use PHPUnit\Framework\TestCase;
 use Redis;
 
 abstract class CommandTestCase extends TestCase {
-  private Kredis $kphpInstance;
-  private Redis $phpInstance;
+  private ?Kredis $kphpInstance = null;
+  private ?Redis $phpInstance = null;
 
-//  public static function setUpBeforeClass(): void {
-//    fwrite(STDOUT, "START Redis");
-//
-//    $dir = __DIR__;
-//    exec("sh $dir/down.sh");
-//    exec("sh $dir/start.sh");
-//    sleep(2);
-//  }
-//
-//  public static function tearDownAfterClass(): void {
-//    fwrite(STDOUT, "STOP Redis");
-//
-//    $dir = __DIR__;
-//    exec("sh $dir/down.sh");
-//  }
+  protected function setUp(): void {
+    $this->kphpInstance = $this->newKphpInstance();
+    $this->phpInstance  = $this->newPhpInstance();
 
-  public function getKphpInstance(): Kredis {
-    $this->kphpInstance = new Kredis();
+    $this->kphpInstance->flushAll();
+    $this->phpInstance->flushAll();
+  }
+
+  private function newKphpInstance(): Kredis {
+    $kphpInstance = new Kredis();
 
     $host = getenv('KPHP_REDIS_HOST');
     $post = getenv('KPHP_REDIS_PORT');
-    $this->kphpInstance->connect($host, $post);
+    $kphpInstance->connect($host, $post);
+
+    return $kphpInstance;
+  }
+
+  private function newPhpInstance(): Redis {
+    $phpInstance = new Redis();
+
+    $host = getenv('PHP_REDIS_HOST');
+    $post = getenv('PHP_REDIS_PORT');
+    $phpInstance->connect($host, $post);
+
+    return $phpInstance;
+  }
+
+  public function getKphpInstance(): Kredis {
+    self::assertNotNull($this->kphpInstance);
 
     return $this->kphpInstance;
   }
 
   public function getPhpInstance(): Redis {
-    $this->phpInstance = new Redis();
-
-    $host = getenv('PHP_REDIS_HOST');
-    $post = getenv('PHP_REDIS_PORT');
-    $this->phpInstance->connect($host, $post);
+    self::assertNotNull($this->phpInstance);
 
     return $this->phpInstance;
   }

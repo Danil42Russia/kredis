@@ -12,7 +12,7 @@ final class DumpCommandTest extends CommandTestCase {
     $redis  = $this->getphpInstance();
     $kredis = $this->getKphpInstance();
 
-    // TODO: добавить добавление данных
+    $this->assertSame($redis->set("user", 123), $kredis->set("user", 123));
 
     $this->assertSame($redis->dump($key), $kredis->dump($key));
   }

@@ -175,6 +175,12 @@ class Kredis {
     return (bool)$resp;
   }
 
+  public function flushAll(): bool {
+    $this->write("FLUSHALL");
+
+    return (bool)$this->read();
+  }
+
   function close(): bool {
     if ($this->resource != null) {
       fclose($this->resource);
