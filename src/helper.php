@@ -1,6 +1,6 @@
 <?php
 
-function dd(...$value) {
+function dd(array ...$value) {
   var_dump($value);
   exit();
 }

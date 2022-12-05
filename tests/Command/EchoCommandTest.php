@@ -6,10 +6,9 @@ use Tests\CommandTestCase;
 
 final class EchoCommandTest extends CommandTestCase {
   /**
-   * @param string $message
    * @dataProvider commandArguments
    */
-  function testArguments($message): void {
+  function testArguments(string $message): void {
     $redis  = $this->getPhpInstance();
     $kredis = $this->getKphpInstance();
 

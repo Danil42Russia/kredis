@@ -6,11 +6,10 @@ use Tests\CommandTestCase;
 
 final class SetCommandTest extends CommandTestCase {
   /**
-   * @param string $key
    * @param mixed  $value
    * @dataProvider commandArguments
    */
-  function testArguments($key, $value): void {
+  function testArguments(string $key, $value): void {
     $redis  = $this->getPhpInstance();
     $kredis = $this->getKphpInstance();
 
@@ -21,7 +20,7 @@ final class SetCommandTest extends CommandTestCase {
   public function commandArguments(): array {
     return [
       ["arg1", "value1"],
-      ["arg3", "value_" . time()],
+      ["arg3", "value_3"],
       ["arg4", 1234],
       ["arg2", true],
     ];

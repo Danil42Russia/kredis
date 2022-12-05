@@ -159,9 +159,8 @@ class Kredis {
    * @return boolean
    *
    * @throws KredisException
-   * @see непроверенная функция
    *
-   * https://redis.io/commands/set
+   * @link https://redis.io/commands/set
    *
    */
   public function set(string $key, $value): bool {
@@ -191,10 +190,11 @@ class Kredis {
   }
 
   /**
-   * @param string|array|null $options
+   * @param string|mixed[]|null $args
+   * @param mixed[]|null        $options
    */
-  private function write(string $command, $options = null) {
-    $command = Command::commandBuilder($command, $options);
+  private function write(string $command, $args = null, $options = null) {
+    $command = Command::commandBuilder($command, $args, $options);
 
     fwrite($this->resource, $command);
   }
@@ -231,11 +231,6 @@ class Kredis {
         $data = fread($this->resource, $size);
 
         return substr($data, 0, -self::CRLF_LEN);
-      }
-
-      case "-":
-      {
-        throw new KredisException("Type " . $type . " unsupported");
       }
 
       case ":":

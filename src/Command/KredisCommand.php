@@ -32,7 +32,7 @@ abstract class KredisCommand {
       $request = array_merge($request, $args);
     }
 
-    /** @var string[]$response */
+    /** @var string[] $response */
     $response = [];
     foreach ($request as $item) {
       $block = static::createBlock((string)$item);

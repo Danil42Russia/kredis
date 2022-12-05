@@ -6,10 +6,9 @@ use Tests\CommandTestCase;
 
 final class KeysCommandTest extends CommandTestCase {
   /**
-   * @param string $pattern
    * @dataProvider commandArguments
    */
-  function testArguments($pattern): void {
+  function testArguments(string $pattern): void {
     $redis  = $this->getPhpInstance();
     $kredis = $this->getKphpInstance();
 

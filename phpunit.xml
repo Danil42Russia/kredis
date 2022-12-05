@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+         executionOrder="random"
          bootstrap="./tests/bootstrap.php"
          colors="true"
 >
@@ -22,12 +23,12 @@
   </coverage>
 
   <php>
-    <!-- Redis (KPHP) -->
-    <env name="KPHP_REDIS_HOST" value="127.0.0.1"/>
-    <env name="KPHP_REDIS_PORT" value="16379"/>
-
     <!-- Redis (PHP) -->
     <env name="PHP_REDIS_HOST" value="127.0.0.1"/>
     <env name="PHP_REDIS_PORT" value="26379"/>
+
+    <!-- Redis (KPHP) -->
+    <env name="KPHP_REDIS_HOST" value="127.0.0.1"/>
+    <env name="KPHP_REDIS_PORT" value="46379"/>
   </php>
 </phpunit>
